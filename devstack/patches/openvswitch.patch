@@ -1,0 +1,25 @@
+From 2baab93f49992432fde82d6f4dc2a77c3eaee294 Mon Sep 17 00:00:00 2001
+From: Jimmy Crumpler <slimjim2234@gmail.com>
+Date: Fri, 17 Feb 2017 14:35:01 -0500
+Subject: [PATCH] change the service from openvswitch to ovs-vswitchd
+
+---
+ lib/neutron_plugins/ovs_base | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/neutron_plugins/ovs_base b/lib/neutron_plugins/ovs_base
+index 62a4d00b..e3d296c3 100644
+--- a/lib/neutron_plugins/ovs_base
++++ b/lib/neutron_plugins/ovs_base
+@@ -64,7 +64,7 @@ function _neutron_ovs_base_install_agent_packages {
+     install_package $(get_packages "openvswitch")
+     if is_ubuntu; then
+         _neutron_ovs_base_install_ubuntu_dkms
+-        restart_service openvswitch-switch
++        restart_service ovs-vswitchd
+     elif is_fedora; then
+         restart_service openvswitch
+         sudo systemctl enable openvswitch
+-- 
+2.11.1
+

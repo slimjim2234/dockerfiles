@@ -1,0 +1,39 @@
+From 3e246be7b50b9018d224eefe4271fcde1037cd8c Mon Sep 17 00:00:00 2001
+From: Jimmy Crumpler <slimjim2234@gmail.com>
+Date: Sat, 18 Feb 2017 13:30:34 -0500
+Subject: [PATCH] memcached restart with service instead of systemctl
+
+---
+ lib/keystone | 2 +-
+ lib/swift    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/keystone b/lib/keystone
+index 45f0fa4f..ba80b764 100644
+--- a/lib/keystone
++++ b/lib/keystone
+@@ -622,7 +622,7 @@ function start_keystone {
+     fi
+ 
+     # (re)start memcached to make sure we have a clean memcache.
+-    restart_service memcached
++    sudo service memcached restart
+ }
+ 
+ # stop_keystone() - Stop running processes
+diff --git a/lib/swift b/lib/swift
+index 5b510e59..dd48fa46 100644
+--- a/lib/swift
++++ b/lib/swift
+@@ -765,7 +765,7 @@ function install_ceilometermiddleware {
+ # start_swift() - Start running processes, including screen
+ function start_swift {
+     # (re)start memcached to make sure we have a clean memcache.
+-    restart_service memcached
++    sudo service memcached restart
+ 
+     # Start rsync
+     if is_ubuntu; then
+-- 
+2.11.1
+

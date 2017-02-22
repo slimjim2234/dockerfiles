@@ -1,0 +1,54 @@
+From ad98061622822ce3b81bb3531de0b6cea874d4f0 Mon Sep 17 00:00:00 2001
+From: Jimmy Crumpler <slimjim2234@gmail.com>
+Date: Fri, 17 Feb 2017 20:20:05 -0500
+Subject: [PATCH] changed the way apache starts, systemd is unpredictable
+
+---
+ lib/apache | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/lib/apache b/lib/apache
+index d1a11ae1..3f5fd594 100644
+--- a/lib/apache
++++ b/lib/apache
+@@ -198,16 +198,12 @@ function disable_apache_site {
+ 
+ # start_apache_server() - Start running apache server
+ function start_apache_server {
+-    start_service $APACHE_NAME
++    sudo service apache2 start
+ }
+ 
+ # stop_apache_server() - Stop running apache server
+ function stop_apache_server {
+-    if [ -n "$APACHE_NAME" ]; then
+-        stop_service $APACHE_NAME
+-    else
+-        exit_distro_not_supported "apache configuration"
+-    fi
++    sudo service apache2 stop
+ }
+ 
+ # restart_apache_server
+@@ -215,16 +211,12 @@ function restart_apache_server {
+     # Apache can be slow to stop, doing an explicit stop, sleep, start helps
+     # to mitigate issues where apache will claim a port it's listening on is
+     # still in use and fail to start.
+-    time_start "restart_apache_server"
+-    stop_service $APACHE_NAME
+-    sleep 3
+-    start_service $APACHE_NAME
+-    time_stop "restart_apache_server"
++    sudo service apache2 restart
+ }
+ 
+ # reload_apache_server
+ function reload_apache_server {
+-    reload_service $APACHE_NAME
++    sudo service apache2 reload
+ }
+ 
+ # Restore xtrace
+-- 
+2.11.1
+

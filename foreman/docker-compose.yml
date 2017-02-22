@@ -1,0 +1,18 @@
+version: '2'
+services:
+    foreman:
+        build: .
+        hostname: foreman
+        ports:
+          - '67:67'
+          - '67:67/udp'
+          - '69:69'
+          - '69:69/udp'
+          - '443:443'
+          - '8140:8140'
+          - '8443:8443'
+        cap_add:
+          - SYS_ADMIN
+        volumes:
+          - /sys/fs/cgroup:/sys/fs/cgroup:ro
+          - /var/run/dbus:/var/run/dbus
